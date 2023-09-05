@@ -1,0 +1,284 @@
+{
+  "skills": [
+    {
+      "name": "English",
+      "category": "language"
+    },
+    {
+      "name": "German",
+      "category": "language"
+    },
+    {
+      "name": "French",
+      "category": "language"
+    },
+    {
+      "name": "Chinese",
+      "category": "language"
+    },
+    {
+      "name": "Spanish",
+      "category": "language"
+    },
+    {
+      "name": "Portuguese",
+      "category": "language"
+    },
+    {
+      "name": "Hindi",
+      "category": "language"
+    },
+    {
+      "name": "Arabic",
+      "category": "language"
+    },
+    {
+      "name": "Russian",
+      "category": "language"
+    },
+    {
+      "name": "Japanese",
+      "category": "language"
+    },
+    {
+      "name": "Opera singing",
+      "category": "music"
+    },
+    {
+      "name": "Metal singing",
+      "category": "music"
+    },
+    {
+      "name": "Acoustic guitar",
+      "category": "music"
+    },
+    {
+      "name": "Trombone",
+      "category": "music"
+    },
+    {
+      "name": "Piano",
+      "category": "music"
+    },
+    {
+      "name": "Music theory",
+      "category": "music"
+    },
+    {
+      "name": "Violin",
+      "category": "music"
+    },
+    {
+      "name": "Flute",
+      "category": "music"
+    },
+    {
+      "name": "Drums",
+      "category": "music"
+    },
+    {
+      "name": "Electronic music",
+      "category": "music"
+    },
+    {
+      "name": "Simple cooking",
+      "category": "general life skills"
+    },
+    {
+      "name": "Baking bread and pastries",
+      "category": "general life skills"
+    },
+    {
+      "name": "Cleaning",
+      "category": "general life skills"
+    },
+    {
+      "name": "Gardening and caring for plants",
+      "category": "general life skills"
+    },
+    {
+      "name": "Space organizing",
+      "category": "general life skills"
+    },
+    {
+      "name": "Time management",
+      "category": "general life skills"
+    },
+    {
+      "name": "Household repairs",
+      "category": "general life skills"
+    },
+    {
+      "name": "Stress management",
+      "category": "general life skills"
+    },
+    {
+      "name": "Personal finances",
+      "category": "general life skills"
+    },
+    {
+      "name": "Caring for clothes and textiles",
+      "category": "general life skills"
+    },
+    {
+      "name": "Conflict resolution",
+      "category": "general life skills"
+    },
+    {
+      "name": "Crochet",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Sewing",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Collages",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Fishing",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Woodwork",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Pottery",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Clay sculpting",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Mandalas",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Candle making",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Soap making",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Dancing",
+      "category": "hobbies and crafts"
+    },
+    {
+      "name": "Watercolor",
+      "category": "visual arts"
+    },
+    {
+      "name": "Photoshop",
+      "category": "visual arts"
+    },
+    {
+      "name": "Illustrator",
+      "category": "visual arts"
+    },
+    {
+      "name": "Gesture drawings",
+      "category": "visual arts"
+    },
+    {
+      "name": "Sketching",
+      "category": "visual arts"
+    },
+    {
+      "name": "Graffiti",
+      "category": "visual arts"
+    },
+    {
+      "name": "Acrylic painting",
+      "category": "visual arts"
+    },
+    {
+      "name": "Acrylic pouring",
+      "category": "visual arts"
+    },
+    {
+      "name": "Oil painting",
+      "category": "visual arts"
+    },
+    {
+      "name": "Creating comics",
+      "category": "visual arts"
+    },
+    {
+      "name": "Python",
+      "category": "programming"
+    },
+    {
+      "name": "C#",
+      "category": "programming"
+    },
+    {
+      "name": "C++",
+      "category": "programming"
+    },
+    {
+      "name": "C",
+      "category": "programming"
+    },
+    {
+      "name": "Java",
+      "category": "programming"
+    },
+    {
+      "name": "Javascript",
+      "category": "programming"
+    },
+    {
+      "name": "Groovy",
+      "category": "programming"
+    },
+    {
+      "name": "Assembler",
+      "category": "programming"
+    },
+    {
+      "name": "Cobol",
+      "category": "programming"
+    },
+    {
+      "name": "Algorithms",
+      "category": "programming"
+    },
+    {
+      "name": "Phishing",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Pickpocketing",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Unethical hacking",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Manipulation",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Social Engineering",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Scams",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Blackmail",
+      "category": "crime and exploitation"
+    },
+    {
+      "name": "Creating viruses",
+      "category": "crime and exploitation"
+    }
+  ]
+}
