@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'skillucketAPIs',
-    'skillucketApp',
+    'skillucketApp.apps.SkillucketappConfig',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
