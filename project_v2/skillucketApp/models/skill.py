@@ -13,11 +13,11 @@ class Skill(models.Model):
         skill = Skill(name="Python Programming", category="Programming",
                       description="Learn Python programming language")
     """
-
+    # TODO choices for skill names from the json file
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     description = models.TextField(default="No description available")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
