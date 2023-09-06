@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from .validators import validate_base64_image
 
 
 class RegisterApi(APIView):
@@ -15,16 +16,12 @@ class RegisterApi(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            # create user:
-            user = User.objects.create_user(username=serializer.data["username"],
-                                            password=serializer.data["password"],
-                                            email=serializer.data["email"],
-                                            first_name=serializer.data.get('first_name', ''),
-                                            last_name=serializer.data.get('last_name', '')
-                                            )
+            # create user with hashed password:
+            user = User.objects.create_user(**serializer.data)
             # create profile:
+            file = validate_base64_image(request.data["image"])  # get image data and convert it to file
             profile = user.profile
-            profile.image.save = (f"{user.username}_profile_image.jpg", serializer.validated_data["image"])
+            profile.image.save(f"{user.username}_profile_image.jpg", file)
             profile.save()
             # create token:
             Token.objects.create(user=user)
