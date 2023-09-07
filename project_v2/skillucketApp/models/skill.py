@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from skillucket_v2.project_v2.skillucketApp.constants import CATEGORY_CHOICES  # constants.py contains model constants for more modularity and flexibility
+from skillucketApp.constants import CATEGORY_CHOICES  # constants.py contains model constants for more modularity and flexibility
 
 
 class Skill(models.Model):
@@ -14,8 +14,8 @@ class Skill(models.Model):
                       description="Learn Python programming language")
     """
     # TODO choices for skill names from the json file
-    name = models.CharField(max_length=255)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
+    name = models.CharField(max_length=255)
     description = models.TextField(default="No description available")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 

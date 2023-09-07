@@ -7,3 +7,10 @@ CATEGORY_CHOICES = [
     ('programming', 'Programming'),
     ('crime_and_exploitation', 'Crime and Exploitation'),
 ]
+
+PROFICIENCY_CHOICES = [
+    ('beginner', 'Beginner'),
+    ('intermediate', 'Intermediate'),
+    ('advanced', 'Advanced'),
+    ('expert', 'Expert'),
+]

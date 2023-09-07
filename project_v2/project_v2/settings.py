@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'skillucketAPIs',
     'skillucketApp',
     'skillucketContactForm',
+    'skillucketApp.apps.SkillucketappConfig',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
