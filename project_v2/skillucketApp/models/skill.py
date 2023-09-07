@@ -13,7 +13,7 @@ class Skill(models.Model):
                       description="Learn Python programming language")
     """
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255, choices=SKILL_CHOICES)
+    name = models.CharField(max_length=255)  # choices=SKILL_CHOICES
     description = models.TextField(default="No description available")
 
     def __str__(self):
