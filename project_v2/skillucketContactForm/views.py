@@ -11,4 +11,4 @@ def contact(request):
     else:
         form = ContactForm()
 
-    return render(request, 'skillucketContactForm/contact.html', {'form': form})
+    return render(request, 'contact.html', {'form': form})
