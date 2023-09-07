@@ -1,6 +1,5 @@
 from django.db import models
 from skillucketApp.models.category import Category
-from skillucketApp.constants import SKILL_CHOICES  # constants.py contains model constants for more modularity and flexibility
 
 
 class Skill(models.Model):
@@ -13,7 +12,7 @@ class Skill(models.Model):
                       description="Learn Python programming language")
     """
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)  # choices=SKILL_CHOICES
+    name = models.CharField(max_length=255)
     description = models.TextField(default="No description available")
 
     def __str__(self):
