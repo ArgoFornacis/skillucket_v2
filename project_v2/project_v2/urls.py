@@ -20,5 +20,6 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('skillucketApp.urls')),
-    path('api/', include('skillucketAPIs.urls', namespace='api'))
+    path('api/', include('skillucketAPIs.urls', namespace='api')),
+    path('contact/', include('skillucketContactForm.urls')),
 ]
