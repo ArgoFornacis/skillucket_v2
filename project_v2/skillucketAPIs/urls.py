@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import RegisterApi, LoginApi, CategoryListCreateApi, CategoryByIdApi
+from .views.user_managment import RegisterApi, LoginApi, UserProfileView, LogoutView, ChangePasswordView
 app_name = 'api'
 
 urlpatterns = [
     path('register/', RegisterApi.as_view(), name='register'),
     path('login/', LoginApi.as_view(), name='login'),
-    path('category/', CategoryListCreateApi.as_view(), name='category'),
-    path('category/<int:category_id>', CategoryByIdApi.as_view(), name='category_details'),
-    # todo: skill urls
+    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('change_password/', ChangePasswordView.as_view(), name='change_password'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
 ]
