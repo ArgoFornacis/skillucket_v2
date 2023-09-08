@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
-    <h1>Contact me</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<div class="container">
+  <h1>Contact me</h1>
+
+  {% if success %}
+    <div class="alert alert-success">
+        Your message has been successfully sent!
+    </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
         <button type="submit">Send</button>
     </form>
+    <link rel="stylesheet" href="{% static 'skillucketApp/css/custom.css' %}">
 {% endblock %}

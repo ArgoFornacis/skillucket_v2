@@ -9,36 +9,108 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('skillucketApp', '0002_alter_profile_image'),
+        ("skillucketApp", "0002_alter_profile_image"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Skill',
+            name="Skill",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('category', models.CharField(choices=[('language', 'Language'), ('music', 'Music'), ('general_life_skills', 'General Life Skills'), ('hobbies_and_crafts', 'Hobbies and Crafts'), ('visual_arts', 'Visual Arts'), ('programming', 'Programming'), ('crime_and_exploitation', 'Crime and Exploitation')], max_length=100)),
-                ('description', models.TextField(default='No description available')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("language", "Language"),
+                            ("music", "Music"),
+                            ("general_life_skills", "General Life Skills"),
+                            ("hobbies_and_crafts", "Hobbies and Crafts"),
+                            ("visual_arts", "Visual Arts"),
+                            ("programming", "Programming"),
+                            ("crime_and_exploitation", "Crime and Exploitation"),
+                        ],
+                        max_length=100,
+                    ),
+                ),
+                ("description", models.TextField(default="No description available")),
             ],
         ),
         migrations.CreateModel(
-            name='UserSkill',
+            name="UserSkill",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('proficiency_level', models.CharField(choices=[('beginner', 'Beginner'), ('intermediate', 'Intermediate'), ('advanced', 'Advanced'), ('expert', 'Expert')])),
-                ('skill', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='skillucketApp.skill')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "proficiency_level",
+                    models.CharField(
+                        choices=[
+                            ("beginner", "Beginner"),
+                            ("intermediate", "Intermediate"),
+                            ("advanced", "Advanced"),
+                            ("expert", "Expert"),
+                        ]
+                    ),
+                ),
+                (
+                    "skill",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="skillucketApp.skill",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='BucketSkill',
+            name="BucketSkill",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_added', models.DateField(auto_now_add=True)),
-                ('target_date', models.DateField(blank=True, null=True)),
-                ('skill', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='skillucketApp.skill')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date_added", models.DateField(auto_now_add=True)),
+                ("target_date", models.DateField(blank=True, null=True)),
+                (
+                    "skill",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="skillucketApp.skill",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
