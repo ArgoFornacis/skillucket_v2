@@ -10,6 +10,9 @@ from ..validators import validate_base64_image
 from rest_framework.permissions import IsAuthenticated
 
 
+""" user management api contain five api views that related to users activities """
+
+
 class RegisterApi(APIView):
     """ register new user create profile image if it was uploaded by user,
         if not profile created anyway with default pic
@@ -93,6 +96,7 @@ class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
+        """ verify old password and allow user to change the password """
         serializer = ChangePasswordSerializer(data=request.data)
         if serializer.is_valid():
             # early return if password doesn't match:
