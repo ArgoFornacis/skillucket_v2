@@ -4,7 +4,7 @@ from skillucketApp.models.skill import Skill
 
 
 class BucketSkill(models.Model):
-    """ bucket skill model represents the skills that a specific user wants to acquire """
+    """bucket skill model represents the skills that a specific user wants to acquire"""
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)

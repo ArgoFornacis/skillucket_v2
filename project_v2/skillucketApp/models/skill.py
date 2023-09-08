@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from skillucketApp.constants import CATEGORY_CHOICES  # constants.py contains model constants for more modularity and flexibility
+from skillucketApp.constants import (
+    CATEGORY_CHOICES,
+)  # constants.py contains model constants for more modularity and flexibility
 
 
 class Skill(models.Model):
@@ -13,6 +15,7 @@ class Skill(models.Model):
         skill = Skill(name="Python Programming", category="Programming",
                       description="Learn Python programming language")
     """
+
     # TODO choices for skill names from the json file
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     name = models.CharField(max_length=255)
