@@ -5,6 +5,10 @@ from .views.skill_management import (
     get_skills_by_category,
     manage_user_skills,
     manage_bucket_skills,
+    get_user_skills,
+    get_bucket_skills,
+    user_skill_detail,
+    bucket_skill_detail,
 )
 
 app_name = 'api'
@@ -19,4 +23,9 @@ urlpatterns = [
     path('categories/<int:category_id>/skills/', get_skills_by_category, name='get_skills_by_category'),
     path('user_skills/', manage_user_skills, name='manage_user_skills'),
     path('bucket_skills/', manage_bucket_skills, name='manage_bucket_skills'),
+    path('user_skills_list/', get_user_skills, name='get_user_skills'),
+    path('bucket_skills_list/', get_bucket_skills, name='get_bucket_skills'),
+    path('user_skills/<int:user_skill_id>/', user_skill_detail, name='user_skill_detail'),
+    path('bucket_skills/<int:bucket_skill_id>/', bucket_skill_detail, name='bucket_skill_detail'),
+
 ]
