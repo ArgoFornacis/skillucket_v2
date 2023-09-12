@@ -6,6 +6,7 @@ from .views.skill_management import (
     manage_user_skills,
     manage_bucket_skills,
 )
+from .views.matching_users import MatchingUsersView, SearchUserBySkill
 
 app_name = 'api'
 
@@ -19,4 +20,7 @@ urlpatterns = [
     path('categories/<int:category_id>/skills/', get_skills_by_category, name='get_skills_by_category'),
     path('user_skills/', manage_user_skills, name='manage_user_skills'),
     path('bucket_skills/', manage_bucket_skills, name='manage_bucket_skills'),
+    path('matches/', MatchingUsersView.as_view(), name='matches'),
+    path('search_skill/', SearchUserBySkill.as_view(), name="search_skill"),
+
 ]
