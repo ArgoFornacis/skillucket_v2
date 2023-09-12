@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
-from .serializers import RegisterSerializer, LoginSerializer
+from ..serializers.register import RegisterSerializer
+from ..serializers.login import LoginSerializer
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from .validators import validate_base64_image
+from ..validators import validate_base64_image
+from rest_framework import status
 
 
 class RegisterApi(APIView):
@@ -25,7 +27,7 @@ class RegisterApi(APIView):
             profile.save()
             # create token:
             Token.objects.create(user=user)
-            return Response(serializer.data)
+            return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors)
 
 

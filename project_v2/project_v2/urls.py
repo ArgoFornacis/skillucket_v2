@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('skillucketApp.urls')),
     path('api/', include('skillucketAPIs.urls', namespace='api')),
     path('contact/', include('skillucketContactForm.urls')),
+
 ]
