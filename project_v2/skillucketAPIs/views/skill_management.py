@@ -6,10 +6,8 @@ from skillucketApp.models.category import Category
 from skillucketApp.models.skill import Skill
 from skillucketApp.models.user_skill import UserSkill
 from skillucketApp.models.bucket_skill import BucketSkill
-from ..serializers.category import CategorySerializer
-from ..serializers.skill import SkillSerializer
-from ..serializers.bucket_skill import BucketSkillSerializer
-from ..serializers.user_skill import UserSkillSerializer
+from ..serializers.skill_management_serializers import CategorySerializer, SkillSerializer, UserSkillSerializer, \
+    BucketSkillSerializer
 
 
 @api_view(['GET'])
