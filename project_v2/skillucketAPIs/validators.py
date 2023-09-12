@@ -11,7 +11,6 @@ def validate_base64_image(value):
     try:
         # Decode the Base64 image:
         decoded_image = base64.b64decode(value)
-        file = ContentFile(decoded_image)
-        return file
+        return ContentFile(decoded_image)
     except Exception:
-        raise serializers.DjangoValidationError('Invalid Base64-encoded string for image')
+        raise serializers.ValidationError('Invalid Base64-encoded string for image, check if the image was encoded')
