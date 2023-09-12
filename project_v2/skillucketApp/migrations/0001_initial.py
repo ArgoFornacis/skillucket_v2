@@ -10,12 +10,17 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+<<<<<<< HEAD
         ('auth', '0012_alter_user_first_name_max_length'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+=======
+        ("auth", "0012_alter_user_first_name_max_length"),
+>>>>>>> mariana_contact_form
     ]
 
     operations = [
         migrations.CreateModel(
+<<<<<<< HEAD
             name='Category',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -56,6 +61,20 @@ class Migration(migrations.Migration):
                 ('target_date', models.DateField(blank=True, null=True)),
                 ('skill', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='skillucketApp.skill')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+=======
+            name="Profile",
+            fields=[
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        primary_key=True,
+                        serialize=False,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                ("image", models.ImageField(upload_to="profile_pics/")),
+>>>>>>> mariana_contact_form
             ],
         ),
     ]

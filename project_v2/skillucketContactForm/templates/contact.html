@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}Contact{% endblock %}
 
 {% block content %}
-    <h1>Contact me</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<div class="container">
+  <h2>Contact Us</h2>
+
+  {% if success %}
+    <p class="alert alert-success">Thank you for your message. We will get back to you soon.</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
         <button type="submit">Send</button>
     </form>
+ </div>
 {% endblock %}

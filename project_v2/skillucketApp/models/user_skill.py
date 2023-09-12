@@ -4,7 +4,7 @@ from skillucketApp.models.skill import Skill
 
 
 class UserSkill(models.Model):
-    """ user skill model represents the skills that a specific user have """
+    """user skill model represents the skills that a specific user have"""
 
     PROFICIENCY_CHOICES = [
         ('beginner', 'Beginner'),
