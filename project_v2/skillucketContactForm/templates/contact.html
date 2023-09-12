@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block title %}Contact{% endblock %}
 
 {% block content %}
 <div class="container">
-  <h2>Contact Us</h2>
+  <h1>Contact us</h1>
 
   {% if success %}
-    <p class="alert alert-success">Thank you for your message. We will get back to you soon.</p>
+    <div class="alert alert-success">
+        Your message has been successfully sent!
+    </div>
   {% endif %}
 
   <form method="post">
@@ -16,4 +20,5 @@
         <button type="submit">Send</button>
     </form>
  </div>
+    <link rel="stylesheet" href="{% static 'skillucketApp/css/custom.css' %}">
 {% endblock %}
