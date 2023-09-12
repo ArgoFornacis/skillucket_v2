@@ -10,11 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="{% static 'skillucketApp/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 </head>
 <body>
     <header class="profile-header">
-        <h1>User Profile</h1>
+        <img src="{% static 'imges/logo.png' %}" alt="Skillucket Logo">
+
+        <h1>Skillucket</h1>
     </header>
 
     <nav>
@@ -23,32 +25,20 @@
             <li><a href="{% url 'profile' %}">Profile</a></li>
         </ul>
     </nav>
-    <main>
-        <h2>Profile Page</h2>
+    <main class="page-content" style="margin-left: 40px;">
+
 
         <!-- User Profile Form -->
-        <div>
-            <h3>User Profile</h3>
-            <form method="post">
-                {% csrf_token %}
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="{{ user.name }}">
-
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" value="{{ user.username }}">
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="{{ user.email }}">
-
-                <label for="location">Location:</label>
-                <input type="text" id="location" name="location" value="{{ user.location }}">
-
-                <label for="skills">Skills:</label>
-                <input type="text" id="skills" name="skills" value="{{ user.skills }}">
-
-                <button type="submit">Save</button>
-            </form>
-        </div>
+    <div>
+    <h2>User Profile</h2>
+    <p style="margin-bottom: 20px;"></p>
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Location:</strong> {{ user.location }}</p>
+    <p><strong>Skills:</strong> {{ user.skills }}</p>
+    <button type="submit">Save</button>
+</div>
 
         <img src="{{ user.profile_picture.url }}" alt="{{ user.name }}">
 
@@ -63,7 +53,7 @@
 </div>
 
         <!-- Contact Information -->
-        <div>
+        <div style="margin-top: 30px;">
     <h3>Contact Information</h3>
     <form method="post">
         {% csrf_token %}
@@ -77,7 +67,7 @@
     </form>
 </div>
 
-        <div>
+        <div style="margin-top: 50px;">
             <h3>Social Media</h3>
             <ul>
                 <li><a href="[Link to User's Facebook Profile]">Facebook</a></li>
