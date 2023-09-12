@@ -24,5 +24,5 @@ Simply make a GET request to this endpoint to find users who possess the skills 
 A list of users who have the queried skill.
 
 ### Usage Example:
-To find users who know "Python", use the URL `/api/search/skill/?q=python`. This will return a list of users who have "Python" as one of their skills.
+To find users who know "Python", use the URL `/api/search_skill/?name=python`. This will return a list of users who have "Python" as one of their skills.
 The skill name is case-insensitive and works with partial string.
