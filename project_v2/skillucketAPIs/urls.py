@@ -1,5 +1,12 @@
 from django.urls import path
-from .views.user_managment import RegisterApi, LoginApi, UserProfileView, LogoutView, ChangePasswordView
+from .views.user_management import RegisterApi, LoginApi, UserProfileView, LogoutView, ChangePasswordView
+from .views.skill_management import (
+    get_categories,
+    get_skills_by_category,
+    manage_user_skills,
+    manage_bucket_skills,
+)
+
 app_name = 'api'
 
 urlpatterns = [
@@ -8,5 +15,8 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('change_password/', ChangePasswordView.as_view(), name='change_password'),
     path('logout/', LogoutView.as_view(), name='logout'),
-
+    path('categories/', get_categories, name='get_categories'),
+    path('categories/<int:category_id>/skills/', get_skills_by_category, name='get_skills_by_category'),
+    path('user_skills/', manage_user_skills, name='manage_user_skills'),
+    path('bucket_skills/', manage_bucket_skills, name='manage_bucket_skills'),
 ]

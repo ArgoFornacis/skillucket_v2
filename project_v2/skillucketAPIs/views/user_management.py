@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from ..serializers import (RegisterSerializer, LoginSerializer, UserProfileGetSerializer, UserProfileUpdateSerializer,
-                           ChangePasswordSerializer)
+from ..serializers.user_management_serializers import (RegisterSerializer, LoginSerializer, UserProfileGetSerializer,
+                                                       UserProfileUpdateSerializer,ChangePasswordSerializer)
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
