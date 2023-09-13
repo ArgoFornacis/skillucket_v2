@@ -9,16 +9,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <title>User Authentication</title>
+    <link rel="stylesheet" href="templates.style.css">
 </head>
 <body>
-    <header>
-        <h1>Register</h1>
-    </header>
-    <main>
-        <!-- Registration form goes here -->
-    </main>
+<h2>Register</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button type="submit">Register</button>
+</form>
 </body>
 </html>
 {% endblock %}
+

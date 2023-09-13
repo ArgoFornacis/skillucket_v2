@@ -1,6 +1,8 @@
 from django.shortcuts import render
-
-
+from skillucketApp.forms.register import RegisterForm
+from django.conf import settings
+import requests
+from django.http import HttpResponse
 
 def home_view(request):
     return render(request, "home.html")
@@ -10,14 +12,19 @@ def profile_view(request):
     return render(request, "profile.html")
 
 
-
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            api_url = f"{settings.BASE_URL}/api/register/"
+            response = requests.post(api_url, data=form.cleaned_data)
+            print(response)
+            if response.status_code == 201:
+                return HttpResponse("Congratz!")
+            # TODO later, redirect to profile
+            # user = form.save()
             # Redirect to a success page or perform other actions
     else:
-        form = RegistrationForm()
+        form = RegisterForm()
 
     return render(request, 'register.html', {'form': form})
