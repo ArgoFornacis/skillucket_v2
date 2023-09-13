@@ -5,6 +5,10 @@ from .views.skill_management import (
     get_skills_by_category,
     manage_user_skills,
     manage_bucket_skills,
+    get_user_skills,
+    get_bucket_skills,
+    user_skill_detail,
+    bucket_skill_detail,
 )
 from .views.matching_users import MatchingUsersView, SearchUserBySkill
 
@@ -22,5 +26,9 @@ urlpatterns = [
     path('bucket_skills/', manage_bucket_skills, name='manage_bucket_skills'),
     path('matches/', MatchingUsersView.as_view(), name='matches'),
     path('search_skill/', SearchUserBySkill.as_view(), name="search_skill"),
+    path('user_skills_list/', get_user_skills, name='get_user_skills'),
+    path('bucket_skills_list/', get_bucket_skills, name='get_bucket_skills'),
+    path('user_skills/<int:user_skill_id>/', user_skill_detail, name='user_skill_detail'),
+    path('bucket_skills/<int:bucket_skill_id>/', bucket_skill_detail, name='bucket_skill_detail'),
 
 ]
