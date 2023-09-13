@@ -21,7 +21,7 @@ def register(request):
             print(response)
             if response.status_code == 201:
                 return HttpResponse("Congratz!")
-            # TODO later, redirect to profile
+            # TODO ok, it actually could be enough
             # user = form.save()
             # Redirect to a success page or perform other actions
     else:
