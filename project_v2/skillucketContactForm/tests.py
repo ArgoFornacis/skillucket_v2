@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 
-
 class ContactFormViewTest(TestCase):
     def test_contact_view_GET(self):
 
@@ -35,13 +34,12 @@ class ContactFormViewTest(TestCase):
         response = self.client.post(reverse("contact"), data=form_data)
 
 
-
 class RedirectTestCase(TestCase):
     def test_redirect(self):
 
-        url_to_test = reverse('redirect')
+        url_to_test = reverse("redirect")
         response = self.client.get(url_to_test)
         self.assertIsInstance(response, HttpResponseRedirect)
-        self.assertRedirects(response, 'http://localhost:8000/home/', fetch_redirect_response=False)
-
-
+        self.assertRedirects(
+            response, "http://localhost:8000/home/", fetch_redirect_response=False
+        )
