@@ -14,6 +14,6 @@ urlpatterns = [
         PasswordChangeView.as_view(success_url=reverse_lazy("password_change_done")),
         name="password_change",
     ),
-    path('edit_profile/', views.edit_profile, name='edit_profile'),
-    path('add_skills/', views.add_skills, name='add_skills'),
+    path("edit_profile/", views.edit_profile, name="edit_profile"),
+    path("add_skills/", views.add_skills, name="add_skills"),
 ]
