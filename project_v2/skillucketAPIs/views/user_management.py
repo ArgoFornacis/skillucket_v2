@@ -20,6 +20,7 @@ class RegisterApi(APIView):
         optional first name, optional last name, and an optional Base64-encoded profile picture.
         returns: successful registration message and users token
     """
+    serializer_class = RegisterSerializer
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -51,6 +52,7 @@ class LoginApi(APIView):
     """ login user return username and token or empty dict if no matching user
         returns: token, user_id
     """
+    serializer_class = LoginSerializer
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -67,6 +69,7 @@ class LoginApi(APIView):
 class UserProfileView(APIView):
     """ api view to manage the user profile """
     permission_classes = [IsAuthenticated]
+    serializer_class = UserProfileUpdateSerializer
 
     def get(self, request):
         """ view details in the users profile """
@@ -94,6 +97,7 @@ class UserProfileView(APIView):
 class ChangePasswordView(APIView):
     """ only put request for changing the password """
     permission_classes = [IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
 
     def put(self, request):
         """ verify old password and allow user to change the password """

@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path("api/v1/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path('', include('skillucketApp.urls')),
     path('api/', include('skillucketAPIs.urls', namespace='api')),
     path('contact/', include('skillucketContactForm.urls')),
