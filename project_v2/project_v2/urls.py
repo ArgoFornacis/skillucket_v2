@@ -24,6 +24,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("skillucketApp.urls")),
     path("contact/", include("skillucketContactForm.urls")),
+
 ]
 
 if settings.DEBUG:
