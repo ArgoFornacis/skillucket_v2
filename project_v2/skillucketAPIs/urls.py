@@ -30,5 +30,4 @@ urlpatterns = [
     path('bucket_skills_list/', get_bucket_skills, name='get_bucket_skills'),
     path('user_skills/<int:user_skill_id>/', user_skill_detail, name='user_skill_detail'),
     path('bucket_skills/<int:bucket_skill_id>/', bucket_skill_detail, name='bucket_skill_detail'),
-
 ]
