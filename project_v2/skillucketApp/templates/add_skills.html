@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Skills{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Skills</title>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Add Skills</h1>
+    </header>
+    <main>
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">Add Skill</button>
+        </form>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <a href="{% url 'profile' %}">Back to Profile</a>
+    </main>
+</body>
+</html>
+{% endblock %}
