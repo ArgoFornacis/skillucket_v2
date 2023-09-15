@@ -27,15 +27,11 @@ def contact(request):
     return render(request, "contact.html", {"form": form})
 
 
-from django.shortcuts import redirect
-
-
 def redirect_view(request):
 
     destination_url = "http://localhost:8000/home/"
     return redirect(destination_url)
 
 
-
 def contact_success(request):
-    return render(request, 'contact_success.html')
+    return render(request, "contact_success.html")

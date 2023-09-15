@@ -1,22 +1,42 @@
+from skillucketApp.forms.register import RegisterForm
+from django.conf import settings
+import requests
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import PasswordChangeForm
-from skillucketApp.forms import ProfileForm
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .forms import SkillForm
+from skillucketApp.forms.skills_profile import SkillForm
 
 
 def home_view(request):
-
     return render(request, "home.html")
 
 
 def profile_view(request):
-
     return render(request, "profile.html")
+
+
+def register(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            api_url = f"{settings.BASE_URL}/api/register/"
+            response = requests.post(api_url, data=form.cleaned_data)
+            print(response)
+            if response.status_code == 201:
+                return HttpResponse("Congratz!")
+            # TODO ok, it actually could be enough
+            # user = form.save()
+            # Redirect to a success page or perform other actions
+    else:
+        form = RegisterForm()
+
+    return render(request, "register.html", {"form": form})
 
 
 def user_login(request):
@@ -36,9 +56,6 @@ def user_login(request):
         form = AuthenticationForm()
 
     return render(request, "login.html", {"form": form})
-
-
-from django.contrib.auth.forms import UserChangeForm
 
 
 @login_required
@@ -79,6 +96,28 @@ def add_skills(request):
         form = SkillForm()
 
     return render(request, "add_skills.html", {"form": form})
+
+
+@login_required
+def edit_profile(request):
+    if request.method == "POST":
+        form = UserProfileForm(
+            request.POST, instance=request.user.profile
+        )  # Assuming you have a UserProfile model
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated.")
+            return redirect(
+                "profile"
+            )  # Redirect to the profile page after successful update
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = UserProfileForm(
+            instance=request.user.profile
+        )  # Assuming you have a UserProfile model
+
+    return render(request, "edit_profile.html", {"form": form})
 
 
 def custom_user_logout(request):

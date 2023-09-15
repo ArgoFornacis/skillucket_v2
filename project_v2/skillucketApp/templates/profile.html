@@ -1,29 +1,86 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Profile Page{% endblock %}
 
 {% block content %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Profile</title>
-    </head>
-    <body>
-        <header>
-            <h1>User Profile</h1>
-        </header>
-        <nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+</head>
+<body>
+    <header class="profile-header">
+        <img src="{% static 'imges/logo.png' %}" alt="Skillucket Logo">
+
+        <h1>Skillucket</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+        </ul>
+    </nav>
+    <main class="page-content" style="margin-left: 40px;">
+
+
+        <!-- User Profile Form -->
+    <div>
+    <h2>User Profile</h2>
+    <p style="margin-bottom: 20px;"></p>
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Location:</strong> {{ user.location }}</p>
+    <p><strong>Skills:</strong> {{ user.skills }}</p>
+    <button type="submit">Save</button>
+</div>
+
+        <img src="{{ user.profile_picture.url }}" alt="{{ user.name }}">
+
+
+        <div>
+    <h3>About Me</h3>
+    <form method="post">
+        {% csrf_token %}
+        <textarea id="bio" name="bio">{{ user.bio }}</textarea>
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+        <!-- Contact Information -->
+        <div style="margin-top: 30px;">
+    <h3>Contact Information</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value="{{ user.phone }}">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}">
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+        <div style="margin-top: 50px;">
+            <h3>Social Media</h3>
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="[Link to User's Facebook Profile]">Facebook</a></li>
+                <li><a href="[Link to User's Twitter Profile]">Twitter</a></li>
             </ul>
-        </nav>
-        <main>
-            <h2>Profile Page</h2>
-            <p>This is the user profile page content.</p>
-        </main>
-    </body>
-    </html>
+        </div>
+
+        <div>
+            <a href="#">Edit Profile</a> |
+            <a href="#">Change Password</a> |
+            <a href="#">Logout</a>
+        </div>
+    </main>
+</body>
+</html>
 {% endblock %}
