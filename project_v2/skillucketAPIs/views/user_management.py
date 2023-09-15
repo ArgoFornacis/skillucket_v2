@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from ..serializers.user_management_serializers import (RegisterSerializer, LoginSerializer, UserProfileGetSerializer,
-                                                       UserProfileUpdateSerializer,ChangePasswordSerializer)
+                                                       UserProfileUpdateSerializer, ChangePasswordSerializer)
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -63,6 +63,7 @@ class LoginApi(APIView):
                 token = Token.objects.create(user=user)
                 data = {'token': str(token), 'user_id': user.id}
                 return Response(data)
+            return Response({"message": "Wrong username or password"})
         return Response(serializer.errors)
 
 
@@ -108,7 +109,7 @@ class ChangePasswordView(APIView):
                 return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
             request.user.set_password(serializer.validated_data["new_password"])  # set new password
             request.user.save()
-            return Response({"message": "Password updated successfully."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Password updated successfully."}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -117,5 +118,7 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        request.auth.delete()  # Deletes the token, effectively logging out the user
-        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
+        if request.auth:
+            request.auth.delete()  # Deletes the token, effectively logging out the user
+            return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
+        return Response({"error": "Token was not found"}, status=status.HTTP_400_BAD_REQUEST)
