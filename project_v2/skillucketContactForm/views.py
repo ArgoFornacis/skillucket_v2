@@ -20,7 +20,9 @@ def contact(request):
             )
             contact_message.save()
 
-            return render(request, "home.html", {"form": form, "success": True})
+            return render(
+                request, "contact_success.html", {"form": form, "success": True}
+            )
     else:
         form = ContactForm()
 

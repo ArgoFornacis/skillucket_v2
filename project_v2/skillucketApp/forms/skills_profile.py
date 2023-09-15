@@ -2,6 +2,7 @@ from django import forms
 from skillucketApp.models.profile import Profile
 from skillucketApp.models.skill import Skill
 
+
 class SkillForm(forms.ModelForm):
     class Meta:
         model = Skill
@@ -11,4 +12,11 @@ class SkillForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["user", "image"]
+        fields = [
+            "image",
+            "username",
+            "email",
+        ]
+
+    username = forms.CharField(required=True)
+    email = forms.EmailField(required=True)

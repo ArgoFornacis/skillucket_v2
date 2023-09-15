@@ -23,9 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("skillucketApp.urls")),
-    path("contact/", include("skillucketContactForm.urls")),
-    path("admin/", admin.site.urls),
-    path("", include("skillucketApp.urls")),
     path("api/", include("skillucketAPIs.urls", namespace="api")),
     path("contact/", include("skillucketContactForm.urls")),
 ]

@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from skillucketApp.forms.skills_profile import ProfileForm
 from skillucketApp.forms.skills_profile import SkillForm
 
 
@@ -58,29 +59,6 @@ def user_login(request):
     return render(request, "login.html", {"form": form})
 
 
-@login_required
-def edit_profile(request):
-    if request.method == "POST":
-        user_form = UserChangeForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, "Your profile has been updated.")
-            return redirect("profile")
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        user_form = UserChangeForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-
-    return render(
-        request,
-        "edit_profile.html",
-        {"user_form": user_form, "profile_form": profile_form},
-    )
-
-
 def add_skills(request):
     if request.method == "POST":
         form = SkillForm(request.POST)
@@ -101,9 +79,7 @@ def add_skills(request):
 @login_required
 def edit_profile(request):
     if request.method == "POST":
-        form = UserProfileForm(
-            request.POST, instance=request.user.profile
-        )  # Assuming you have a UserProfile model
+        form = ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Your profile has been updated.")
@@ -113,9 +89,7 @@ def edit_profile(request):
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = UserProfileForm(
-            instance=request.user.profile
-        )  # Assuming you have a UserProfile model
+        form = ProfileForm(instance=request.user.profile)
 
     return render(request, "edit_profile.html", {"form": form})
 
