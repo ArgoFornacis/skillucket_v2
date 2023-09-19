@@ -1,5 +1,11 @@
 from django.urls import path
-from .views.user_management import RegisterApi, LoginApi, UserProfileView, LogoutView, ChangePasswordView
+from .views.user_management import (
+    RegisterApi,
+    LoginApi,
+    UserProfileView,
+    LogoutView,
+    ChangePasswordView,
+)
 from .views.skill_management import (
     get_categories,
     get_skills_by_category,
@@ -12,7 +18,7 @@ from .views.skill_management import (
 )
 from .views.matching_users import MatchingUsersView, SearchUserBySkill
 
-app_name = 'api'
+app_name = "api"
 
 urlpatterns = [
     path('register/', RegisterApi.as_view(), name='register'),

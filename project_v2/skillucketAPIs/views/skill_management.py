@@ -14,7 +14,7 @@ from ..serializers.skill_management_serializers import (
 )
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_categories(request):
     """
@@ -27,7 +27,7 @@ def get_categories(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_skills_by_category(request, category_id):
     """
@@ -43,7 +43,7 @@ def get_skills_by_category(request, category_id):
     return Response(serializer.data)
 
 
-@api_view(['POST', 'DELETE'])
+@api_view(["POST", "DELETE"])
 @permission_classes([IsAuthenticated])
 def manage_user_skills(request):
     """
@@ -54,37 +54,50 @@ def manage_user_skills(request):
     Response: A JSON response confirming the action or providing an error message.
     """
     user = request.user
-    skill_id = request.data.get('skill_id')
+    skill_id = request.data.get("skill_id")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         # Try to add the skill to the user's skills
         # Handle cases where the skill does not exist or already exists in the user's skills.
         try:
             skill = Skill.objects.get(id=skill_id)
-            user_skill, created = UserSkill.objects.get_or_create(user=user, skill=skill)
+            user_skill, created = UserSkill.objects.get_or_create(
+                user=user, skill=skill
+            )
             if created:
                 serializer = UserSkillSerializer(user_skill)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
-                return Response({"message": "Skill already exists in User Skills"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"message": "Skill already exists in User Skills"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
         except Skill.DoesNotExist:
-            return Response({"message": "Skill not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "Skill not found"}, status=status.HTTP_404_NOT_FOUND
+            )
 
-    if request.method == 'DELETE':
+    if request.method == "DELETE":
         # Try to remove the skill from the user's skills
         # Handle cases where the skill does not exist in the user's skills.
         try:
             skill = Skill.objects.get(id=skill_id)
             user_skill = UserSkill.objects.get(user=user, skill=skill)
             user_skill.delete()
-            return Response({"message": "Skill removed from User Skills"}, status=status.HTTP_204_NO_CONTENT)
+            return Response(
+                {"message": "Skill removed from User Skills"},
+                status=status.HTTP_204_NO_CONTENT,
+            )
 
         except (Skill.DoesNotExist, UserSkill.DoesNotExist):
-            return Response({"message": "Skill not found in User Skills"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "Skill not found in User Skills"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
 
-@api_view(['POST', 'DELETE'])
+@api_view(["POST", "DELETE"])
 @permission_classes([IsAuthenticated])
 def manage_bucket_skills(request):
     """
@@ -95,35 +108,47 @@ def manage_bucket_skills(request):
     Response: A JSON response confirming the action or providing an error message.
     """
     user = request.user
-    skill_id = request.data.get('skill_id')
+    skill_id = request.data.get("skill_id")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         # Try to add the skill to the user's bucket list
         # Handle cases where the skill does not exist or already exists in the user's bucket list.
         try:
             skill = Skill.objects.get(pk=skill_id)
-            bucket_skill, created = BucketSkill.objects.get_or_create(user=user, skill=skill)
+            bucket_skill, created = BucketSkill.objects.get_or_create(
+                user=user, skill=skill
+            )
             if not created:
-                return Response({"message": "Skill already exists in Bucket List"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"message": "Skill already exists in Bucket List"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
             serializer = BucketSkillSerializer(bucket_skill)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         except Skill.DoesNotExist:
-            return Response({"message": "Skill not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "Skill not found"}, status=status.HTTP_404_NOT_FOUND
+            )
 
-    if request.method == 'DELETE':
+    if request.method == "DELETE":
         # Try to remove the skill from the user's bucket list
         # Handle cases where the skill does not exist in the user's bucket list.
         try:
             skill = Skill.objects.get(pk=skill_id)
             bucket_skill = BucketSkill.objects.get(user=user, skill=skill)
             bucket_skill.delete()
-            return Response({"message": "Skill removed from Bucket List"}, status=status.HTTP_204_NO_CONTENT)
+            return Response(
+                {"message": "Skill removed from Bucket List"},
+                status=status.HTTP_204_NO_CONTENT,
+            )
         except (Skill.DoesNotExist, BucketSkill.DoesNotExist):
-            return Response({"message": "Skill not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "Skill not found"}, status=status.HTTP_404_NOT_FOUND
+            )
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_user_skills(request):
     """
@@ -139,7 +164,7 @@ def get_user_skills(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_bucket_skills(request):
     """
@@ -153,7 +178,6 @@ def get_bucket_skills(request):
     bucket_skills = BucketSkill.objects.filter(user=user)
     serializer = BucketSkillSerializer(bucket_skills, many=True)
     return Response(serializer.data)
-
 
 
 @api_view(['GET', 'PUT', 'PATCH'])
@@ -172,13 +196,15 @@ def user_skill_detail(request, user_skill_id):
     try:
         user_skill = UserSkill.objects.get(id=user_skill_id, user=request.user)
     except UserSkill.DoesNotExist:
-        return Response({"message": "User skill not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(
+            {"message": "User skill not found"}, status=status.HTTP_404_NOT_FOUND
+        )
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = UserSkillSerializer(user_skill)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    if request.method == 'PUT' or request.method == 'PATCH':
+    if request.method == "PUT" or request.method == "PATCH":
         # Create a serializer instance with partial=True
         serializer = UserSkillSerializer(user_skill, data=request.data, partial=True)
 
@@ -189,7 +215,7 @@ def user_skill_detail(request, user_skill_id):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT', 'PATCH'])
+@api_view(["GET", "PUT", "PATCH"])
 @permission_classes([IsAuthenticated])
 def bucket_skill_detail(request, bucket_skill_id):
     """
@@ -205,15 +231,19 @@ def bucket_skill_detail(request, bucket_skill_id):
     try:
         bucket_skill = BucketSkill.objects.get(id=bucket_skill_id, user=request.user)
     except BucketSkill.DoesNotExist:
-        return Response({"message": "Bucket skill not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(
+            {"message": "Bucket skill not found"}, status=status.HTTP_404_NOT_FOUND
+        )
 
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = BucketSkillSerializer(bucket_skill)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    if request.method == 'PUT' or request.method == 'PATCH':
+    if request.method == "PUT" or request.method == "PATCH":
         # Create a serializer instance with partial=True
-        serializer = BucketSkillSerializer(bucket_skill, data=request.data, partial=True)
+        serializer = BucketSkillSerializer(
+            bucket_skill, data=request.data, partial=True
+        )
 
         if serializer.is_valid():
             serializer.save()

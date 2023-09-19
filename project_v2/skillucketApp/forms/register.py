@@ -8,4 +8,3 @@ class RegisterForm(forms.Form):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
     image = forms.ImageField(required=False)
-
