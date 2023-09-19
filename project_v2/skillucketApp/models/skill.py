@@ -11,6 +11,7 @@ class Skill(models.Model):
         skill = Skill(name="Python Programming", category="Programming",
                       description="Learn Python programming language")
     """
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(default="No description available")

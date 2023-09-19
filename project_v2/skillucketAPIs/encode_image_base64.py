@@ -5,7 +5,7 @@ from PIL import Image
 
 
 def is_image_valid(image_path):
-    """ checking if the file exists and is actually an image, always returning a boolean """
+    """checking if the file exists and is actually an image, always returning a boolean"""
 
     try:
         image = Image.open(image_path)
@@ -18,7 +18,7 @@ def is_image_valid(image_path):
 
 
 def encode_image_base64(image_path):
-    """ encode an image file into base64 and return the string """
+    """encode an image file into base64 and return the string"""
 
     if is_image_valid(image_path):
         with open(image_path, mode="rb") as image_file:
