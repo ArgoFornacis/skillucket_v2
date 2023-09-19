@@ -9,7 +9,7 @@ urlpatterns = [
     path("profile/", views.profile_view, name="profile"),
     path("register/", views.register, name="register"),
     path("login/", views.user_login, name="login"),
-    path("logout/", views.custom_user_logout, name="custom_logout"),
+    path("logout/", views.custom_user_logout, name="custom_user_logout"),
     path(
         "password_change/",
         PasswordChangeView.as_view(success_url=reverse_lazy("password_change_done")),
