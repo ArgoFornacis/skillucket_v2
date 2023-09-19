@@ -155,7 +155,6 @@ def get_bucket_skills(request):
     return Response(serializer.data)
 
 
-
 @api_view(['GET', 'PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def user_skill_detail(request, user_skill_id):

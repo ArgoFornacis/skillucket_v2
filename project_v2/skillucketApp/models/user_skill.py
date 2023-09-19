@@ -16,6 +16,7 @@ class UserSkill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
     proficiency_level = models.CharField(choices=PROFICIENCY_CHOICES)
+    notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username} knows: {self.skill.name}"
