@@ -2,6 +2,7 @@ from rest_framework.test import APITestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
+from datetime import date
 from django.contrib.auth.models import User
 from skillucketApp.models.category import Category
 from skillucketApp.models.skill import Skill
@@ -498,7 +499,7 @@ class UserSkillDetailTests(APITestCase):
 
         # Update the user skill data
         new_data = {
-            'proficiency_level': 'Advanced'
+            'proficiency_level': 'advanced'
         }
         url = reverse('api:user-skill-detail', args=[self.user_skill.id])
         response = self.client.put(url, new_data, format='json')
@@ -508,12 +509,12 @@ class UserSkillDetailTests(APITestCase):
 
         # Check the response data
         updated_user_skill = UserSkill.objects.get(id=self.user_skill.id)
-        self.assertEqual(updated_user_skill.proficiency_level, 'Advanced')
+        self.assertEqual(updated_user_skill.proficiency_level, 'advanced')
 
     def test_update_user_skill_unauthenticated(self):
         # Update the user skill data without authentication
         new_data = {
-            'proficiency_level': 'Advanced'
+            'proficiency_level': 'advanced'
         }
         url = reverse('api:user-skill-detail', args=[self.user_skill.id])
         response = self.client.put(url, new_data, format='json')
@@ -527,7 +528,7 @@ class UserSkillDetailTests(APITestCase):
 
         # Partially update the user skill data
         new_data = {
-            'proficiency_level': 'Advanced'
+            'proficiency_level': 'advanced'
         }
         url = reverse('api:user-skill-detail', args=[self.user_skill.id])
         response = self.client.patch(url, new_data, format='json')
@@ -537,14 +538,112 @@ class UserSkillDetailTests(APITestCase):
 
         # Check the response data
         updated_user_skill = UserSkill.objects.get(id=self.user_skill.id)
-        self.assertEqual(updated_user_skill.proficiency_level, 'Advanced')
+        self.assertEqual(updated_user_skill.proficiency_level, 'advanced')
 
     def test_partial_update_user_skill_unauthenticated(self):
         # Partially update the user skill data without authentication
         new_data = {
-            'proficiency_level': 'Advanced'
+            'proficiency_level': 'advanced'
         }
         url = reverse('api:user-skill-detail', args=[self.user_skill.id])
+        response = self.client.patch(url, new_data, format='json')
+
+        # Check the response status code (should be 401 Unauthorized)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class BucketSkillDetailTests(APITestCase):
+    def setUp(self):
+        # Create a user
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+
+        # Create a category for testing
+        self.category = Category.objects.create(name='Test Category')
+
+        # Create a skill within the category
+        self.skill = Skill.objects.create(name='Test Skill', category=self.category)
+
+        # Create a bucket skill for the user with a target_date
+        self.bucket_skill = BucketSkill.objects.create(
+            user=self.user, skill=self.skill, target_date=date(2024, 12, 31)
+        )
+
+    def test_get_bucket_skill_detail_authenticated(self):
+        # Log in the user
+        self.client.login(username='testuser', password='testpass')
+
+        # Make a GET request to get the bucket skill detail
+        url = reverse('api:bucket-skill-detail', args=[self.bucket_skill.id])
+        response = self.client.get(url)
+
+        # Check the response status code (should be 200 OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Check the response data
+        expected_data = BucketSkillSerializer(self.bucket_skill).data
+        self.assertEqual(response.data, expected_data)
+
+    def test_get_bucket_skill_detail_unauthenticated(self):
+        # Make a GET request to get the bucket skill detail without authentication
+        url = reverse('api:bucket-skill-detail', args=[self.bucket_skill.id])
+        response = self.client.get(url)
+
+        # Check the response status code (should be 401 Unauthorized)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_bucket_skill_authenticated(self):
+        # Log in the user
+        self.client.login(username='testuser', password='testpass')
+
+        # Update the bucket skill data
+        new_data = {
+            'target_date': '2025-12-31'  # Change the target_date to a different date
+        }
+        url = reverse('api:bucket-skill-detail', args=[self.bucket_skill.id])
+        response = self.client.put(url, new_data, format='json')
+
+        # Check the response status code (should be 200 OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Check the response data
+        updated_bucket_skill = BucketSkill.objects.get(id=self.bucket_skill.id)
+        self.assertEqual(updated_bucket_skill.target_date, date(2025, 12, 31))  # Updated date
+
+    def test_update_bucket_skill_unauthenticated(self):
+        # Update the bucket skill data without authentication
+        new_data = {
+            'target_date': '2025-12-31'  # Change the target_date to a different date
+        }
+        url = reverse('api:bucket-skill-detail', args=[self.bucket_skill.id])
+        response = self.client.put(url, new_data, format='json')
+
+        # Check the response status code (should be 401 Unauthorized)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_partial_update_bucket_skill_authenticated(self):
+        # Log in the user
+        self.client.login(username='testuser', password='testpass')
+
+        # Partially update the bucket skill data
+        new_data = {
+            'target_date': '2025-12-31'  # Change the target_date to a different date
+        }
+        url = reverse('api:bucket-skill-detail', args=[self.bucket_skill.id])
+        response = self.client.patch(url, new_data, format='json')
+
+        # Check the response status code (should be 200 OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Check the response data
+        updated_bucket_skill = BucketSkill.objects.get(id=self.bucket_skill.id)
+        self.assertEqual(updated_bucket_skill.target_date, date(2025, 12, 31))  # Updated date
+
+    def test_partial_update_bucket_skill_unauthenticated(self):
+        # Partially update the bucket skill data without authentication
+        new_data = {
+            'target_date': '2025-01-31'  # Change the target_date to a different date
+        }
+        url = reverse('api:bucket-skill-detail', args=[self.bucket_skill.id])
         response = self.client.patch(url, new_data, format='json')
 
         # Check the response status code (should be 401 Unauthorized)
