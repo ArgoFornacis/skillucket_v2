@@ -15,7 +15,7 @@ class UserSkill(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    proficiency_level = models.CharField(choices=PROFICIENCY_CHOICES)
+    proficiency_level = models.CharField(max_length=255, choices=PROFICIENCY_CHOICES)
     notes = models.TextField(blank=True, null=True)
 
     def __str__(self):

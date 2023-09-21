@@ -82,8 +82,7 @@ def manage_user_skills(request):
         # Try to remove the skill from the user's skills
         # Handle cases where the skill does not exist in the user's skills.
         try:
-            skill = Skill.objects.get(id=skill_id)
-            user_skill = UserSkill.objects.get(user=user, skill=skill)
+            user_skill = UserSkill.objects.get(user=user, skill_id=skill_id)
             user_skill.delete()
             return Response(
                 {"message": "Skill removed from User Skills"},
