@@ -32,18 +32,18 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "skillucketAPIs",
-    "skillucketApp",
-    "skillucketContactForm",
-    # 'skillucketApp.apps.SkillucketappConfig',
-    "rest_framework",
-    "rest_framework.authtoken",
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    'skillucketAPIs',
+    'skillucketApp',
+    'skillucketContactForm',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_spectacular',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -147,4 +147,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Skillucket API',
+    'DESCRIPTION': 'An API for connecting users based on skill acquisition and sharing',
+    'VERSION': '1.0.0',
 }
