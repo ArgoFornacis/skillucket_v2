@@ -15,14 +15,43 @@ from skillucketApp.forms.skills_profile import SkillForm
 
 
 def home_view(request):
+    """
+        Render the user's  home page, .
+
+        Args:
+            request (HttpRequest): The HTTP request object.
+
+        Returns:
+            HttpResponse: The rendered  home page as an HttpResponse.
+    """
     return render(request, "home.html")
 
 
 def profile_view(request):
+    """
+        Render the user's profile page.
+
+        Args:
+            request (HttpRequest): The HTTP request object.
+
+        Returns:
+            HttpResponse: The rendered profile page as an HttpResponse.
+    """
     return render(request, "profile.html")
 
 
 def register(request):
+    """
+        Handle user registration.
+
+        This view handles  POST requests. For GET requests, it renders the registration form.
+
+        Returns:
+            HttpResponse: If the request is a GET, the registration form is rendered as an HttpResponse.
+                          If the request is a POST and registration is successful, a success message is returned.
+                          If the request is a POST and registration fails, the registration form with error messages is returned.
+    """
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -41,6 +70,15 @@ def register(request):
 
 
 def user_login(request):
+    """
+        Handle user login.
+
+        Returns:
+            HttpResponse: If the request is a GET, the login form is rendered as an HttpResponse.
+                          If the request is a POST and login is successful, the user is redirected to the home page.
+                          If the request is a POST and login fails, the login form with error messages is returned.
+    """
+
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
@@ -60,6 +98,13 @@ def user_login(request):
 
 
 def add_skills(request):
+    """
+    Handle adding skills to a user's profile.
+    Returns:
+            HttpResponse: If the request is a GET, the skill addition form is rendered as an HttpResponse.
+                          If the request is a POST and skill addition is successful, a success message is returned.
+                          If the request is a POST and skill addition fails, the skill addition form with error messages is returned.
+    """
     if request.method == "POST":
         form = SkillForm(request.POST)
         if form.is_valid():
@@ -78,6 +123,14 @@ def add_skills(request):
 
 @login_required
 def edit_profile(request):
+    """
+        Handle editing a user's profile.
+    Returns:
+            HttpResponse: If the request is a GET, the profile editing form is rendered as an HttpResponse.
+                          If the request is a POST and profile update is successful, the user is redirected to the profile page.
+                          If the request is a POST and profile update fails, the profile editing form with error messages is returned.
+
+    """
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid():
@@ -95,22 +148,11 @@ def edit_profile(request):
 
 
 def custom_user_logout(request):
+    """
+        Handle user logout.
+        This view logs the user out and redirects them to the home page.
+
+
+    """
     logout(request)
     return redirect("home")
-
-
-def custom_password_change(request):
-    if request.method == "POST":
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            # Log the user in again (optional)
-            login(request, user)
-            messages.success(request, "Your password was successfully changed.")
-            return redirect("profile")
-        else:
-            messages.error(request, "Please correct the error below.")
-    else:
-        form = PasswordChangeForm(request.user)
-
-    return render(request, "password_change.html", {"form": form})
