@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 
 
 urlpatterns = [
+    path("", views.home_view, name="home"),
     path("home/", views.home_view, name="home"),
     path("profile/", views.profile_view, name="profile"),
     path("register/", views.register, name="register"),
