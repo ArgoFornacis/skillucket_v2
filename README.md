@@ -9,7 +9,7 @@ together.
 ### Installation instruction
 Skillucket is a Python Django project. It requires Python and pip to be installed.
 
-After forking and cloning the project, run the terminal command while being in the skillucket_v2/project_v2 directory:
+After forking and cloning the project, run the terminal command while being in the skillucket_v2 directory:
 
 ```
 pip install -r requirements.txt
@@ -22,3 +22,12 @@ Run the server to check:
 python3 manage.py runserver
 ```
 
+### Usage
+
+### Features
+
+### Contributions
+
+### FAQ
+
+### Changes
