@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -19,3 +21,7 @@ urlpatterns = [
     path("edit_profile/", views.edit_profile, name="edit_profile"),
     path("add_skills/", views.add_skills, name="add_skills"),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

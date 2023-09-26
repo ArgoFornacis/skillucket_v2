@@ -12,6 +12,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from skillucketApp.forms.skills_profile import ProfileForm
 from skillucketApp.forms.skills_profile import SkillForm
+from .models.profile import Profile
 
 
 def home_view(request):
@@ -37,7 +38,16 @@ def profile_view(request):
         Returns:
             HttpResponse: The rendered profile page as an HttpResponse.
     """
-    return render(request, "profile.html")
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        profile = Profile.objects.get(user=user_id)
+        print(profile.user.username)
+        # Now, user_id contains the ID of the authenticated user
+    else:
+        # The user is not authenticated
+        user_id = None  # You can handle this case as needed
+
+    return render(request, "profile_v2.html", {"profile": profile})
 
 
 def register(request):

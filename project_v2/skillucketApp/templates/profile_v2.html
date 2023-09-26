@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile_style_v2.css' %}">
+    <title>User Profile</title>
+    
+    <style>
+     
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>PROFILE</h1>
+
+        <!-- Profile Picture -->
+        <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-picture">
+        <input type="file" id="profile-picture-upload" accept="image/*">
+        <button onclick="uploadProfilePicture()">Upload Picture</button>
+
+        <!-- User Info -->
+        <div class="userinfo">
+            <label for="username">USERNAME</label>
+            <hr>
+            <span id="username">{{ profile.user.username }}</span>
+        </div>
+
+        <div class="userinfo">
+            <label for="about-me">About Me:</label>
+            <hr>
+            <p id="about-me">{{ profile.about }}</p>
+        </div>
+
+        <!-- Skills and Bucket Buttons -->
+        <div class="skillbucketbuttons">
+            <a href="skills_v1.html"><button style="width: 150px; height: 100px; background-color: #e08c0e; color: #fff; font-size: 18px;"onclick="openSkills()">My Skills</button></a>
+            <a href="bucket_v1.html"><button style="width: 150px; height: 100px; background-color: #e08c0e; color: #fff; font-size: 18px;"onclick="openBucket()">My Bucket</button></a>
+        </div>
+
+        <!-- Logout, Edit Profile, Change Password Buttons -->
+        <button onclick="logout()">Logout</button>
+        <button onclick="editProfile()">Edit Profile</button>
+        <button onclick="changePassword()">Change Password</button>
+
+        <!-- JavaScript Functions (for illustration purposes) -->
+        <script>
+            function uploadProfilePicture() {
+                // Implement file upload logic here (e.g., using FormData and AJAX)
+                alert('Profile picture uploaded!');
+            }
+
+            function openSkills() {
+                // Implement skills functionality here (e.g., display user's skills)
+                alert('Skills button clicked!');
+            }
+
+            function openBucket() {
+                // Implement bucket functionality here (e.g., display user's bucket items)
+                alert('Bucket button clicked!');
+            }
+
+            function logout() {
+                // Implement logout logic here (e.g., redirect to logout endpoint)
+                alert('Logged out!');
+            }
+
+            function editProfile() {
+                // Implement edit profile logic here (e.g., open a profile editing form)
+                alert('Editing profile...');
+            }
+
+            function changePassword() {
+                // Implement change password logic here (e.g., open a password change form)
+                alert('Changing password...');
+            }
+        </script>
+    </div>
+</body>
+</html>

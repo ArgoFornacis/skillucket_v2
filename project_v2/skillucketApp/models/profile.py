@@ -9,6 +9,7 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to="profile_pics/", default="profile_pics/jellyfisz.jpg"
     )
+    about = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s profile"
