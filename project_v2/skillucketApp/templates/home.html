@@ -1,36 +1,25 @@
-{% extends 'base.html' %}
-{% load static %}
-
-
-{% block title %}Home Page{% endblock %}
-
-{% block content %}
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{% static 'skillucketApp/css/custom.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}">
+    <title>Your Website</title>
 </head>
 <body>
-    <header class="profile-header">
-        <h1>User Profile</h1>
-    </header>
+    <div class="container">
+        <img src="media/logo/logo.png" alt="Logo" class="logo">
 
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>Home Page</h2>
-        <p>This is the home page content.</p>
-        <button type="button" class="btn btn-primary">Learn More</button>
-
-    </main>
+        <h1>Skillucket</h1>
+        <div class="buttons">
+            <a href="{% url 'register' %}">
+                <button class="register-button">Register</button>
+            </a>
+            <a href="{% url 'login' %}">
+                <button class="login-button">Login</button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
-{% endblock %}
-

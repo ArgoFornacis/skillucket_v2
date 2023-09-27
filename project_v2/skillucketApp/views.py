@@ -1,6 +1,8 @@
 from skillucketApp.forms.register import RegisterForm
 from django.conf import settings
 import requests
+from django.db import IntegrityError
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -41,7 +43,6 @@ def profile_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         profile = Profile.objects.get(user=user_id)
-        print(profile.user.username)
         # Now, user_id contains the ID of the authenticated user
     else:
         # The user is not authenticated
@@ -51,42 +52,38 @@ def profile_view(request):
 
 
 def register(request):
-    """
-        Handle user registration.
-
-        This view handles  POST requests. For GET requests, it renders the registration form.
-
-        Returns:
-            HttpResponse: If the request is a GET, the registration form is rendered as an HttpResponse.
-                          If the request is a POST and registration is successful, a success message is returned.
-                          If the request is a POST and registration fails, the registration form with error messages is returned.
+    """Register view handles get and post requests.
+    Register new user to db and create automatically a profile for the user.
+    If a profile pic was sent in the registration form, it is added to the profile.
+    After successful registration, redirect to login.
     """
 
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST, request.FILES)
         if form.is_valid():
-            api_url = f"{settings.BASE_URL}/api/register/"
-            response = requests.post(api_url, data=form.cleaned_data)
-            print(response)
-            if response.status_code == 201:
-                return HttpResponse("Congratz!")
-            # TODO ok, it actually could be enough
-            # user = form.save()
-            # Redirect to a success page or perform other actions
+            form_data = form.cleaned_data
+            try:
+                user = User.objects.create_user(username=form_data["username"], password=form_data["password"], email=form_data["email"])
+                if user:
+                    if "image" in request.FILES:
+                        image = request.FILES["image"]
+                        profile = Profile.objects.get(user=user)
+                        profile.image = image
+                        profile.save()
+                    return redirect("login")
+                else:
+                    return HttpResponse("Failed to create user")
+            except IntegrityError:
+                form.add_error(None, "Username or email already exists")
     else:
         form = RegisterForm()
 
-    return render(request, "register.html", {"form": form})
+    return render(request, "register_v4.html", {"form": form})
 
 
 def user_login(request):
     """
-        Handle user login.
-
-        Returns:
-            HttpResponse: If the request is a GET, the login form is rendered as an HttpResponse.
-                          If the request is a POST and login is successful, the user is redirected to the home page.
-                          If the request is a POST and login fails, the login form with error messages is returned.
+    Login view uses Django built in AuthenticationForm, authenticate function and login function
     """
 
     if request.method == "POST":
@@ -95,16 +92,13 @@ def user_login(request):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
             user = authenticate(username=username, password=password)
-            if user is not None:
+            if user:
                 login(request, user)
-                messages.success(request, f"Welcome, {user.username}!")
-                return redirect("home")
-            else:
-                messages.error(request, "Invalid username or password.")
+                return redirect("profile")
     else:
         form = AuthenticationForm()
 
-    return render(request, "login.html", {"form": form})
+    return render(request, "login_v4.html", {"form": form})
 
 
 def add_skills(request):
