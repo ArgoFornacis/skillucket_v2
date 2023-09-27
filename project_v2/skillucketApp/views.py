@@ -12,7 +12,13 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from skillucketApp.forms.skills_profile import ProfileForm
 from skillucketApp.forms.skills_profile import SkillForm
+from django.http import HttpResponse
+#  TODO: remove HttpResponse import after it's been cleaned
 
+
+#  TODO: this below
+#  edit_profile, add_skills and change_password will not work because local static dir is marked for removal.
+#  the templates need to be adjusted accordingly and linked with the main static dir.
 
 def home_view(request):
     """
@@ -24,7 +30,8 @@ def home_view(request):
         Returns:
             HttpResponse: The rendered  home page as an HttpResponse.
     """
-    return render(request, "home.html")
+    # return render(request, "home.html"
+    return HttpResponse("I'm a placeholder, delete me.")
 
 
 def profile_view(request):
@@ -37,7 +44,8 @@ def profile_view(request):
         Returns:
             HttpResponse: The rendered profile page as an HttpResponse.
     """
-    return render(request, "profile.html")
+    # return render(request, "del_profile.html")
+    return HttpResponse("I'm a placeholder, delete me.")
 
 
 def register(request):
@@ -66,7 +74,8 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "register.html", {"form": form})
+    # return render(request, "del_register.html", {"form": form})
+    return HttpResponse("I'm a placeholder, delete me. Also this view is super old.")
 
 
 def user_login(request):
@@ -93,8 +102,8 @@ def user_login(request):
                 messages.error(request, "Invalid username or password.")
     else:
         form = AuthenticationForm()
-
-    return render(request, "login.html", {"form": form})
+    return HttpResponse("I'm a placeholder, delete me.")
+    # return render(request, "del_login.html", {"form": form})
 
 
 def add_skills(request):
@@ -155,4 +164,5 @@ def custom_user_logout(request):
 
     """
     logout(request)
-    return redirect("home")
+    # return redirect("home")
+    return HttpResponse("I'm a placeholder, delete me.")
