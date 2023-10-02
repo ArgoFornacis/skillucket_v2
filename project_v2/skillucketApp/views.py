@@ -1,20 +1,24 @@
 from skillucketApp.forms.register import RegisterForm
+from django.urls import reverse_lazy
 from django.conf import settings
 import requests
 from django.db import IntegrityError
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
 from skillucketApp.forms.skills_profile import ProfileForm
 from skillucketApp.forms.skills_profile import SkillForm
 from .models.profile import Profile
+from .forms.user_and_profile import UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic.list import ListView
+from .models.user_skill import UserSkill
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 def home_view(request):
@@ -30,25 +34,23 @@ def home_view(request):
     return render(request, "home.html")
 
 
+@login_required
 def profile_view(request):
-    """
-        Render the user's profile page.
-
-        Args:
-            request (HttpRequest): The HTTP request object.
-
-        Returns:
-            HttpResponse: The rendered profile page as an HttpResponse.
-    """
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        profile = Profile.objects.get(user=user_id)
-        # Now, user_id contains the ID of the authenticated user
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')
     else:
-        # The user is not authenticated
-        user_id = None  # You can handle this case as needed
-
-    return render(request, "profile_v2.html", {"profile": profile})
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form
+    }
+    return render(request, "profile_v2.html", context)
 
 
 def register(request):
@@ -81,7 +83,7 @@ def register(request):
     return render(request, "register_v4.html", {"form": form})
 
 
-def user_login(request):
+def login_view(request):
     """
     Login view uses Django built in AuthenticationForm, authenticate function and login function
     """
@@ -151,7 +153,7 @@ def edit_profile(request):
     return render(request, "edit_profile.html", {"form": form})
 
 
-def custom_user_logout(request):
+def logout_view(request):
     """
         Handle user logout.
         This view logs the user out and redirects them to the home page.
@@ -160,3 +162,56 @@ def custom_user_logout(request):
     """
     logout(request)
     return redirect("home")
+
+
+@method_decorator(login_required, name='dispatch')
+class UserSkillsListView(ListView):
+    model = UserSkill
+    template_name = 'user_skills_list.html'
+    context_object_name = 'user_skills'
+
+    def get_queryset(self):
+        return UserSkill.objects.filter(user=self.request.user)
+
+
+@method_decorator(login_required, name='dispatch')
+class UserSkillsCreateView(CreateView):
+    model = UserSkill
+    fields = ['skill', 'proficiency_level', 'notes']
+    template_name = "user_skills_create.html"
+    success_url = reverse_lazy('user_skills')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class UserSkillUpdateView(UpdateView):
+    model = UserSkill
+    fields = ['skill', 'proficiency_level', 'notes']
+    template_name = 'user_skill_update.html'
+    success_url = reverse_lazy('user_skills')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise Http404("User Skill not found")
+        return obj
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class UserSkillDeleteView(DeleteView):
+    model = UserSkill
+    template_name = 'userskill_confirm_delete.html' # todo: fix his template
+    success_url = reverse_lazy('user_skills')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise Http404("User Skill not found")
+        return obj

@@ -1,49 +1,88 @@
 /* Reset some default styles */
-body, html {
+body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
+}
+
+/* Apply a background color and set font styles */
+body {
+    background-color: #f4f4f4;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    line-height: 1.6;
+    color: #333;
 }
 
-/* Center the container */
-.container {
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Logo styles */
-.logo {
-    max-width: 150px; /* Adjust the logo size as needed */
-}
-
-/* Title styles */
-h1 {
-    font-size: 28px;
-    margin: 20px 0;
-}
-
-/* Button styles */
-.buttons {
-    display: flex;
-    justify-content: center;
-}
-
-.register-button, .login-button {
-    background-color: #007BFF;
+/* Style the header and navigation bar */
+header {
+    background-color: #333;
     color: #fff;
-    font-size: 18px;
-    padding: 10px 20px;
+    padding: 1rem 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo {
+    width: 40px; /* Adjust the logo width as needed */
+    height: 40px; /* Adjust the logo height as needed */
+    margin-right: 10px; /* Spacing between logo and text */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Adjust the spacing between links as needed */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Style the buttons */
+.register-button,
+.login-button {
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    border-radius: 5px;
-    margin: 0 10px;
+    padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
     transition: background-color 0.3s;
 }
 
-.register-button:hover, .login-button:hover {
-    background-color: #0056b3;
+.register-button:hover,
+.login-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
 }
+
+/* Center the page content */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style headings and paragraphs as needed */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+register {
+    margin_left: 50px;
+}
+/* Add more styles as needed */

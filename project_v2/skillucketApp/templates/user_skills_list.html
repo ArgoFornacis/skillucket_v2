@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>My Skills:</h1>
+    {% for user_skill in user_skills %}
+        <h2>
+            Skill: {{ user_skill.skill }},
+            Proficiency Level: {{ user_skill.proficiency_level }},
+            Notes: {{ user_skill.notes }}
+            <button>
+             <a href="{% url 'user_skill_update' pk=user_skill.id %}">Edit</a>
+            </button>
+            <button>
+             <a href="{% url 'user_skill_delete' pk=user_skill.id %}">Delete</a>
+            </button>
+        </h2>
+    {% endfor %}
+    <button><a href="{% url 'user_skills_create' %}">Add Skills</a></button>
+
+{% endblock content %}

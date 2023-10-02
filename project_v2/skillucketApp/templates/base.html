@@ -1,33 +1,38 @@
-
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Website{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'skillucketApp/css/custom.css' %}">
-
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}">
+    <title>Your Website</title>
+</head>
 <body>
     <header>
-        <!-- Header content goes here -->
+        <nav class="navbar">
+            <div class="container">
+                <a href="{% url 'home' %}" class="logo-link">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+                    <h1>Skillucket</h1>
+                </a>
+                {% if user.is_authenticated %}
+                Hello {{ user.username }}
+                <ul class="nav-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+                {% else %}
+                <ul class="nav-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </nav>
     </header>
-    <nav>
-        <!-- Navigation menu goes here -->
-    </nav>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        <!-- Footer content goes here -->
-    </footer>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
