@@ -1,7 +1,5 @@
 from skillucketApp.forms.register import RegisterForm
 from django.urls import reverse_lazy
-from django.conf import settings
-import requests
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
@@ -18,22 +16,16 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.list import ListView
 from .models.user_skill import UserSkill
+from .models.bucket_skill import BucketSkill
+from .models.skill import Skill
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 def home_view(request):
-    """
-        Render the user's  home page, .
 
-        Args:
-            request (HttpRequest): The HTTP request object.
-
-        Returns:
-            HttpResponse: The rendered  home page as an HttpResponse.
-    """
     return render(request, "home.html")
 
-
+# Views related to user management
 @login_required
 def profile_view(request):
     if request.method == 'POST':
@@ -163,7 +155,7 @@ def logout_view(request):
     logout(request)
     return redirect("home")
 
-
+# Views related to user_skills
 @method_decorator(login_required, name='dispatch')
 class UserSkillsListView(ListView):
     model = UserSkill
@@ -207,7 +199,7 @@ class UserSkillUpdateView(UpdateView):
 @method_decorator(login_required, name='dispatch')
 class UserSkillDeleteView(DeleteView):
     model = UserSkill
-    template_name = 'userskill_confirm_delete.html' # todo: fix his template
+    template_name = 'userskill_confirm_delete.html'
     success_url = reverse_lazy('user_skills')
 
     def get_object(self, queryset=None):
@@ -215,3 +207,79 @@ class UserSkillDeleteView(DeleteView):
         if obj.user != self.request.user:
             raise Http404("User Skill not found")
         return obj
+
+
+# Views related to bucket_skills
+
+@method_decorator(login_required, name='dispatch')
+class BucketSkillsListView(ListView):
+    model = BucketSkill
+    template_name = 'bucket_skills_list.html'
+    context_object_name = 'bucket_skills'
+
+    def get_queryset(self):
+        return BucketSkill.objects.filter(user=self.request.user)
+
+
+@method_decorator(login_required, name='dispatch')
+class BucketSkillsCreateView(CreateView):
+    model = BucketSkill
+    fields = ['skill', 'target_date', 'notes']
+    template_name = "bucket_skills_create.html"
+    success_url = reverse_lazy('bucket_skills')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class BucketSkillUpdateView(UpdateView):
+    model = BucketSkill
+    fields = ['skill', 'target_date', 'notes']
+    template_name = 'bucket_skills_update.html'
+    success_url = reverse_lazy('bucket_skills')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise Http404("Bucket Skill not found")
+        return obj
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class BucketSkillDeleteView(DeleteView):
+    model = BucketSkill
+    template_name = 'bucketskill_confirm_delete.html'
+    success_url = reverse_lazy('bucket_skills')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise Http404("Bucket Skill not found")
+        return obj
+
+
+@login_required
+def list_matches_view(request):
+    user = request.user
+    wanted_skills = Skill.objects.filter(bucketskill__user=user)  # getting the skills object through bucket_skill
+    matching_users = User.objects.filter(userskill__skill__in=wanted_skills).distinct().exclude(id=user.id)
+    matching_data = {}
+    for matching_user in matching_users:
+        user_skills = UserSkill.objects.filter(user=matching_user, skill__in=wanted_skills)
+
+        for user_skill in user_skills:
+            skill = user_skill.skill.name
+
+            if skill not in matching_data:
+                matching_data[skill] = []
+
+            matching_data[skill].append({"user": matching_user, "user_skill": user_skill})
+
+    context = {"matching_data": matching_data}
+    return render(request, "matching_users.html", context)

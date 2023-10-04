@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Skills I want:</h1>
+    {% for bucket_skill in bucket_skills %}
+        <h2>
+            Skill: {{ bucket_skill.skill }},
+            Target Date: {{ bucket_skill.target_date }},
+            Notes: {{ bucket_skill.notes }}
+            <button>
+             <a href="{% url 'bucket_skill_update' pk=bucket_skill.id %}">Edit</a>
+            </button>
+            <button>
+             <a href="{% url 'bucket_skill_delete' pk=bucket_skill.id %}">Delete</a>
+            </button>
+        </h2>
+    {% endfor %}
+    <button><a href="{% url 'bucket_skills_create' %}">Add Skill</a></button>
+
+{% endblock content %}

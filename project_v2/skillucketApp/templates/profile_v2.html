@@ -9,7 +9,7 @@
           <p class="text-secondary">{{ user.email }}</p>
         </div>
          <button><a href="{% url 'user_skills' %}">User Skills</a></button>
-          <button><a href="#">Bucket Skills</a></button>
+          <button><a href="{% url 'bucket_skills' %}">Bucket Skills</a></button>
       </div>
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}

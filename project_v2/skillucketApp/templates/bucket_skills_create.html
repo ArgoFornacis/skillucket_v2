@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Select a skill to add to your bucket list:</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Skill</button>
+    </form>
+    <a href="{% url 'user_skills' %}">Back to your bucket list</a>
+
+{% endblock content %}

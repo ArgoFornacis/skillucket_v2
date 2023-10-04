@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Your matches:</h1>
+    {% for skill, data_list in matching_data.items %}
+        <h2>
+            Skill: {{ skill }}
+            <br>
+            {% for dict in data_list %}
+                <h3>
+                    Username: {{ dict.user.username }}
+                    <br>
+                    Proficiency level: {{ dict.user_skill.proficiency_level }}
+                    <br>
+                    Notes: {{ dict.user_skill.notes }}
+                </h3>
+                <img class="rounded-circle account-img" src="{{ dict.user.profile.image.url }}">
+            {% endfor %}
+        </h2>
+    {% endfor %}
+
+{% endblock content %}
