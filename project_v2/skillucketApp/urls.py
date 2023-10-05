@@ -25,6 +25,7 @@ urlpatterns = [
     path("bucket_skills/create/", BucketSkillsCreateView.as_view(), name='bucket_skills_create'),
     path("bucket_skills/<int:pk>", BucketSkillUpdateView.as_view(), name='bucket_skill_update'),
     path("bucket_skills/<int:pk>/delete", BucketSkillDeleteView.as_view(), name='bucket_skill_delete'),
+    path('search/', views.search_skill_view, name='search'),
 
     path(
         "password_change/",

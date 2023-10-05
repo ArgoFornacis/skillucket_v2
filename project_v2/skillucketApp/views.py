@@ -283,3 +283,31 @@ def list_matches_view(request):
 
     context = {"matching_data": matching_data}
     return render(request, "matching_users.html", context)
+
+
+@login_required
+def search_skill_view(request):
+    params = request.GET.get('skill', '')
+    if not params:
+        messages.error(request, 'Please enter a search query.')
+        return redirect('home')
+    else:
+        matching_skills = Skill.objects.filter(name__icontains=params)
+        matching_users = User.objects.filter(userskill__skill__in=matching_skills).distinct().exclude(id=request.user.id)
+        if not matching_users:
+            messages.error(request, 'No matches for this search term.')
+            redirect('home')
+        matching_data = {}
+        for matching_user in matching_users:
+            user_skills = UserSkill.objects.filter(user=matching_user, skill__in=matching_skills)
+
+            for user_skill in user_skills:
+                skill = user_skill.skill.name
+
+                if skill not in matching_data:
+                    matching_data[skill] = []
+
+                matching_data[skill].append({"user": matching_user, "user_skill": user_skill})
+
+        context = {"matching_data": matching_data}
+        return render(request, "search_skill.html", context)
